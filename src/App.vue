@@ -1,17 +1,28 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1>{{ title }}</h1>
+  <!-- <p v-show="isVisible">{{ description }}</p> No elimina el elemento del DOM-->
+  <!-- Elimina el elemento del DOM -->
+  <p v-if="isVisible">{{ description }}</p>
+  <p v-else>Mensaje cuando el mensaje principal se oculta</p>
+  <input type="text" v-model="description" />
+  <Todo />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Todo from "./components/Todo.vue";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    Todo,
+  },
+  data: () => {
+    return {
+      title: "Hello - Test",
+      description: "Description test",
+      isVisible: true,
+    };
+  },
+};
 </script>
 
 <style>
@@ -22,5 +33,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.margin-15 {
+  margin-bottom: 15px;
 }
 </style>
