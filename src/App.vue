@@ -4,22 +4,37 @@
   <!-- Elimina el elemento del DOM -->
   <p v-if="isVisible">{{ description }}</p>
   <p v-else>Mensaje cuando el mensaje principal se oculta</p>
-  <input type="text" v-model="description" />
   <Todo />
 </template>
 
 <script>
+import { onBeforeUnmount, onMounted, ref } from "vue";
+
 import Todo from "./components/Todo.vue";
 export default {
   name: "App",
   components: {
     Todo,
   },
-  data: () => {
+  setup() {
+    const title = ref(""); // ref es una función que devuelve una referencia;
+    const description = ref("Este es un mensaje");
+    const isVisible = ref(true);
+
+    //Métodos del ciclo de vida(hooks)
+    onMounted(() => {
+      console.log("Componente montado");
+      title.value = "Bienvenido a test de vue";
+    });
+
+    onBeforeUnmount(() => {
+      console.log("Componente desmontado"); // Se ejecuta antes de eliminar el componente del DOM
+    });
+
     return {
-      title: "Hello - Test",
-      description: "Description test",
-      isVisible: true,
+      title,
+      description,
+      isVisible,
     };
   },
 };

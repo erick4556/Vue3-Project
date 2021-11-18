@@ -1,4 +1,5 @@
 <template>
+  <input type="text" v-model="newTask" @keyup.enter="addTask" />
   <ul>
     <li
       v-bind:class="{ 'margin-15': isDesktop }"
@@ -16,36 +17,57 @@
 </template>
 
 <script>
+import { ref } from "vue";
+import { v4 as uuid4 } from "uuid";
 export default {
   name: "Todo",
-  data: () => {
+  setup() {
+    const tasks = ref([
+      {
+        id: uuid4(),
+        description: "Curso 1",
+        isCompleted: false,
+      },
+      {
+        id: uuid4(),
+        description: "Curso 2",
+        isCompleted: false,
+      },
+      {
+        id: uuid4(),
+        description: "Curso 3",
+        isCompleted: false,
+      },
+      {
+        id: uuid4(),
+        description: "Curso 4",
+        isCompleted: false,
+      },
+    ]);
+    const isDesktop = ref(true);
+    const activeColor = ref("#fff");
+    const background = ref("green");
+    const fontSize = ref(16);
+    const newTask = ref("");
+
+    // Methods
+    const addTask = () => {
+      tasks.value.push({
+        id: uuid4(),
+        description: newTask.value,
+        isCompleted: false,
+      });
+      newTask.value = "";
+    };
+
     return {
-      tasks: [
-        {
-          id: 0,
-          description: "Curso 1",
-          isCompleted: false,
-        },
-        {
-          id: 1,
-          description: "Curso 2",
-          isCompleted: false,
-        },
-        {
-          id: 2,
-          description: "Curso 3",
-          isCompleted: false,
-        },
-        {
-          id: 3,
-          description: "Curso 4",
-          isCompleted: false,
-        },
-      ],
-      isDesktop: true,
-      activeColor: "#fff",
-      background: "green",
-      fontSize: 16,
+      tasks,
+      isDesktop,
+      activeColor,
+      background,
+      fontSize,
+      newTask,
+      addTask,
     };
   },
 };
