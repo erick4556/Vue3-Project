@@ -1,32 +1,35 @@
 <template>
   <input type="text" v-model="newTask" @keyup.enter="addTask" />
+  <div class="">
+    <p>Total de tareas: {{ sizeOfCompletedTasks }}</p>
+  </div>
   <ul>
-    <li
-      v-bind:class="{ 'margin-15': isDesktop }"
-      v-bind:style="{
-        color: activeColor,
-        background: background,
-        fontSize: fontSize + 'px',
-      }"
+    <TodItem
       v-for="task in tasks"
       v-bind:key="task.id"
-    >
-      {{ task.description }}
-    </li>
+      :task="task.description"
+      :isCompleted="task.isCompleted"
+      :isDesktop="isDesktop"
+    />
   </ul>
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { v4 as uuid4 } from "uuid";
+import TodItem from "./TodoItem.vue";
+
 export default {
   name: "Todo",
+  components: {
+    TodItem,
+  },
   setup() {
     const tasks = ref([
       {
         id: uuid4(),
         description: "Curso 1",
-        isCompleted: false,
+        isCompleted: true,
       },
       {
         id: uuid4(),
@@ -36,12 +39,12 @@ export default {
       {
         id: uuid4(),
         description: "Curso 3",
-        isCompleted: false,
+        isCompleted: true,
       },
       {
         id: uuid4(),
         description: "Curso 4",
-        isCompleted: false,
+        isCompleted: true,
       },
     ]);
     const isDesktop = ref(true);
@@ -60,6 +63,27 @@ export default {
       newTask.value = "";
     };
 
+    //Computed properties
+    const sizeOfCompletedTasks = computed(() => {
+      const completedTasks = tasks.value.filter((task) => task.isCompleted);
+      return completedTasks.length;
+    });
+
+    // Watch
+    watch(
+      newTask, //Elemento a esuchar
+      (current, prev) => {
+        console.log(
+          `Se ha modificado este valor: newTask => valor anterior ${prev} - Valor actual ${current}`
+        );
+        if (current.length > 0) {
+          console.log("Texto válido");
+        } else {
+          console.log("Texto inválido");
+        }
+      }
+    );
+
     return {
       tasks,
       isDesktop,
@@ -68,6 +92,7 @@ export default {
       fontSize,
       newTask,
       addTask,
+      sizeOfCompletedTasks,
     };
   },
 };
