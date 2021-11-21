@@ -4,18 +4,14 @@
   <!-- Elimina el elemento del DOM -->
   <p v-if="isVisible">{{ description }}</p>
   <p v-else>Mensaje cuando el mensaje principal se oculta</p>
-  <Todo />
+  <router-view /><!-- Para renderizar las routas -->
 </template>
 
 <script>
 import { onBeforeUnmount, onMounted, ref } from "vue";
 
-import Todo from "./components/Todo.vue";
 export default {
   name: "App",
-  components: {
-    Todo,
-  },
   setup() {
     const title = ref(""); // ref es una función que devuelve una referencia;
     const description = ref("Este es un mensaje");
