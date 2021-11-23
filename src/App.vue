@@ -4,6 +4,11 @@
   <!-- Elimina el elemento del DOM -->
   <p v-if="isVisible">{{ description }}</p>
   <p v-else>Mensaje cuando el mensaje principal se oculta</p>
+  <div class="flex space-evenly">
+    <router-link to="/">Ir a Inicio</router-link>
+    <router-link to="/login">Ir a Login</router-link>
+    <router-link to="/about">Ir a About</router-link>
+  </div>
   <router-view /><!-- Para renderizar las routas -->
 </template>
 
@@ -47,5 +52,11 @@ export default {
 }
 .margin-15 {
   margin-bottom: 15px;
+}
+.flex {
+  display: flex;
+}
+.space-evenly {
+  justify-content: space-evenly;
 }
 </style>

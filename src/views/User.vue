@@ -1,5 +1,5 @@
 <template>
-  <h1>Hello user {{ $route.params.id }} - {{ $route.query.lastname }}</h1>
+  <h1>Hello user {{ $route.params.name }} - {{ $route.query.lastname }}</h1>
   <router-link to="/users/marcos/profile">Go to Profile</router-link>
   <br />
   <br />
