@@ -9,18 +9,21 @@
     <router-link to="/login">Ir a Login</router-link>
     <router-link to="/about">Ir a About</router-link>
   </div>
+  <button class="btn" @click="goToUrl">Ir a User</button>
   <router-view /><!-- Para renderizar las routas -->
 </template>
 
 <script>
 import { onBeforeUnmount, onMounted, ref } from "vue";
-
+import { useRouter } from "vue-router";
 export default {
   name: "App",
   setup() {
     const title = ref(""); // ref es una función que devuelve una referencia;
     const description = ref("Este es un mensaje");
     const isVisible = ref(true);
+    const router = useRouter(); //Reemplazo de $router de vue2
+    const name = ref("marcos");
 
     //Métodos del ciclo de vida(hooks)
     onMounted(() => {
@@ -32,10 +35,21 @@ export default {
       console.log("Componente desmontado"); // Se ejecuta antes de eliminar el componente del DOM
     });
 
+    const goToUrl = () => {
+      // router.push(url);
+      router.push({
+        name: "User",
+        params: { name: name.value, message: title.value },
+        query: { lastname: "mendez" },
+      }); //Componente, los parámetros y el query
+    };
+
     return {
       title,
       description,
       isVisible,
+      goToUrl,
+      name,
     };
   },
 };
@@ -58,5 +72,12 @@ export default {
 }
 .space-evenly {
   justify-content: space-evenly;
+}
+.btn {
+  background: #000;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 15px;
+  border-style: none;
 }
 </style>
