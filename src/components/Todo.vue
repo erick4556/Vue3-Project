@@ -1,15 +1,18 @@
 <template>
-  <input type="text" v-model="newTask" @keyup.enter="addTask" />
-  <div class="">
-    <p>Total de tareas: {{ sizeOfCompletedTasks }}</p>
+  <!-- <input type="text" v-model="newTask" @keyup.enter="addTask" /> -->
+  <!-- Quiero que escuche el evento text -->
+  <TodoForm @text="addTask" />
+  <div class="flex space-evenly align-center">
+    <p>Total de tareas completadas: {{ sizeOfCompletedTasks }}</p>
   </div>
   <ul>
     <TodItem
       v-for="task in tasks"
       v-bind:key="task.id"
-      :task="task.description"
-      :isCompleted="task.isCompleted"
+      :task="task"
       :isDesktop="isDesktop"
+      :complete-task="completeTask"
+      :delete-task="deleteTask"
     />
   </ul>
 </template>
@@ -18,18 +21,20 @@
 import { computed, ref, watch } from "vue";
 import { v4 as uuid4 } from "uuid";
 import TodItem from "./TodoItem.vue";
+import TodoForm from "./TodoForm.vue";
 
 export default {
   name: "Todo",
   components: {
     TodItem,
+    TodoForm,
   },
   setup() {
     const tasks = ref([
       {
         id: uuid4(),
         description: "Curso 1",
-        isCompleted: true,
+        isCompleted: false,
       },
       {
         id: uuid4(),
@@ -44,7 +49,7 @@ export default {
       {
         id: uuid4(),
         description: "Curso 4",
-        isCompleted: true,
+        isCompleted: false,
       },
     ]);
     const isDesktop = ref(true);
@@ -54,13 +59,27 @@ export default {
     const newTask = ref("");
 
     // Methods
-    const addTask = () => {
-      tasks.value.push({
+    const addTask = ({ inputText }) => {
+      /*  tasks.value.push({
         id: uuid4(),
         description: newTask.value,
         isCompleted: false,
       });
-      newTask.value = "";
+      newTask.value = ""; */
+      //Uso de event
+      tasks.value.push({
+        id: uuid4(),
+        description: inputText.value,
+        isCompleted: false,
+      });
+    };
+
+    const completeTask = (task) => {
+      task.isCompleted = true;
+    };
+
+    const deleteTask = (taskRemoved) => {
+      tasks.value = tasks.value.filter((t) => t.id !== taskRemoved.id);
     };
 
     //Computed properties
@@ -93,6 +112,8 @@ export default {
       newTask,
       addTask,
       sizeOfCompletedTasks,
+      completeTask,
+      deleteTask,
     };
   },
 };

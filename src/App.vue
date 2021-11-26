@@ -69,9 +69,14 @@ export default {
 }
 .flex {
   display: flex;
+  max-width: 500px;
+  margin: auto; /* Todo esté centrado */
 }
 .space-evenly {
   justify-content: space-evenly;
+}
+.align-center {
+  align-items: center;
 }
 .btn {
   background: #000;
@@ -79,5 +84,8 @@ export default {
   padding: 10px 20px;
   margin: 15px;
   border-style: none;
+}
+.space-between {
+  justify-content: space-between;
 }
 </style>
