@@ -15,8 +15,7 @@
         <i class="fas fa-check" />
       </TodoItemBtn>
       <TodoItemBtn :handle-click="deleteTask" :task="task" text-class="delete">
-        <!-- <i class="fas fa-times" /> -->
-        Eliminar
+        <i class="fas fa-times" />
       </TodoItemBtn>
     </div>
   </li>

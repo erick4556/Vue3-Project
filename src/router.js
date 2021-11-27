@@ -13,6 +13,7 @@ const beforeEnterHook = (to) => {
 
 const Home = () => import("./views/Home.vue"); // Lazy load. Solo cuando accedan a la ruta home solo se va a cargar esa ruta
 const About = () => import("./views/About.vue"); // Lazy load
+const Product = () => import("./views/Product.vue");
 
 const routes = [
   {
@@ -48,6 +49,11 @@ const routes = [
         component: UserConfig,
       },
     ],
+  },
+  {
+    path: "/product",
+    name: "Product",
+    component: Product,
   },
   {
     path: "/:pathMatch(.*)*", //Ruta generica, muestra todas las rutas que no son parte de la aplicación
